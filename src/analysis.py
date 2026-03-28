@@ -1,4 +1,4 @@
-#Analysis
+#analysis
 import requests
 import pandas as pd
 
@@ -14,10 +14,8 @@ def load_telraam_data():
 
     data = response.json()
 
-    # Telraam LDES data zit in 'member'
+    # LDES data zit in 'member'
     records = data.get("member", [])
 
-    # Omzetten naar DataFrame
     df = pd.json_normalize(records)
-
     return df
