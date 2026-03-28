@@ -2,20 +2,16 @@
 import requests
 import pandas as pd
 
-def load_telraam_data():
-    url = "https://telraam-api.net/ldes/observations/by-location"
+def load_tomtom_flow(lat, lon, api_key):
+    url = "https://api.tomtom.com/traffic/services/4/flowSegmentData/absolute/10/json"
 
-    headers = {
-        "Accept": "application/json"
+    params = {
+        "point": f"{lat},{lon}",
+        "key": api_key
     }
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, params=params)
     response.raise_for_status()
 
     data = response.json()
-
-    # LDES data zit in 'member'
-    records = data.get("member", [])
-
-    df = pd.json_normalize(records)
-    return df
+    return data
